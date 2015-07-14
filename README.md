@@ -10,3 +10,4 @@ a simple OPCUA sample client to demonstrate how to use the [node-opcua](https://
     $ node simple_client.js
     
 
+This repo contains code modified by me to run for my application.
