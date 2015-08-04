@@ -2,7 +2,7 @@
 // Modified by Jeff Codling for proof of concept
 
 // value to read from server
-var readValue = "ns=2;s=Pressure";
+var readValue = "ns=2;s=Sonic";
 var readValue2 = "ns=2;s=PumpSpeed";
 var readValue3 = "ns=4;s=TemperatureAnalogItem";
 
@@ -25,6 +25,7 @@ var client = new opcua.OPCUAClient();
 
 // Endpoint for Raspberry Pi
 var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
+// var endpointUrl = "opc.tcp://192.168.1.116:26543";
 
 var the_session = null;
 async.series([
