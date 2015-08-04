@@ -32,7 +32,6 @@ var readSensor = function(readValue, mainCallback) {
                 }
                 callback(err);
             });
-
         },
         // step 4 : read a variable
         function (callback) {
@@ -55,13 +54,19 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
+app.all('/', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 app.get('/', function (req, res) {
     readSensor("ns=2;s=Sonic", function(value) {
         res.send(value.toString());
     });
 });
 
-var server = app.listen(8080, function() {
+var server = app.listen(8081, function() {
     var host = server.address().address;
     var port = server.address().port;
 

@@ -19,6 +19,12 @@
         <div class="row">
             <div class="col-md-4">
                 <h4 class="text-center">Ultrasonic</h4>
+                <span class="text-center">
+                    <button class="btn btn-success"
+                            onclick="readSensor('ultrasonic')">
+                        Read Sensor
+                    </button>
+                </span>
                 <textarea id="ultrasonic" class="sensordata"></textarea>
             </div>
             <div class="col-md-4">
@@ -32,6 +38,6 @@
         </div>
     </div>
 
-    <script src="democlient.js"></script>
+    <script src="opcuaclient.js"></script>
 </body>
 </html>
