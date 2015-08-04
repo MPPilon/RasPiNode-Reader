@@ -168,9 +168,7 @@ async.series([
             console.log("-session closed".red);
             callback();
         });
-    },
-
-
+    }
 ],
     function(err) {
         if (err) {

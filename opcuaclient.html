@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <title>OPC UA Client</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="democlient.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">OPC UA Client</h1>
+                <h2 class="text-center">Reading Ultrasonic sensor</h2>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="text-center">Ultrasonic</h4>
+                <textarea id="ultrasonic" class="sensordata"></textarea>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-center">Simulated Sensor 1</h4>
+                <textarea id="sensor1" class="sensordata"></textarea>
+            </div>
+            <div class="col-md-4">
+                <h4 class="text-center">Simulated Sensor 2</h4>
+                <textarea id="sensor2" class="sensordata"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="democlient.js"></script>
+</body>
+</html>
