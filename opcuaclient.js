@@ -11,4 +11,3 @@ function readSensor(idLabel) {
     xmlhttp.open("GET", "http://localhost:8081", true);
     xmlhttp.send();
 }
-

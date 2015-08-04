@@ -1,18 +1,19 @@
+// API for demo opcuaclient.js to retrieve sensor readings for html front end
+// by: Jeff Codling
+
 var opcua = require("node-opcua");
 var async = require("async");
 
 var client = new opcua.OPCUAClient();
 
-// Endpoint for Raspberry Pi
+// Endpoint for Raspberry Pi inside work network
 var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
-// var endpointUrl = "opc.tcp://192.168.1.116:26543";
 
 var the_session = null;
 
 var readSensor = function(readValue, mainCallback) {
-    var returnValue = null;
     async.series([
-        // step 1 : connect to
+        // step 1 : connect to OPCUA server
         function (callback) {
             client.connect(endpointUrl, function (err) {
                 if (err) {
@@ -33,7 +34,7 @@ var readSensor = function(readValue, mainCallback) {
                 callback(err);
             });
         },
-        // step 4 : read a variable
+        // step 3 : read variable
         function (callback) {
             the_session.readVariableValue(readValue, function (err, dataValues, diagnostics) {
                 if (!err) {
@@ -42,17 +43,17 @@ var readSensor = function(readValue, mainCallback) {
                 callback(err);
             })
         },
+        // step 4 : close session
         function () {
             client.disconnect(function() {});
         }
     ]);
 };
 
-// RESTfull API
+// REST API
 
 var express = require('express');
 var app = express();
-var fs = require("fs");
 
 app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -67,8 +68,7 @@ app.get('/', function (req, res) {
 });
 
 var server = app.listen(8081, function() {
-    var host = server.address().address;
     var port = server.address().port;
 
-    console.log("Listening at http://%s:%s", host, port);
+    console.log("API listening on port %s", port);
 });
