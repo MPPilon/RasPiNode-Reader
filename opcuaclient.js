@@ -1,5 +1,7 @@
 var sonic, sim1, sim2;
 
+var timeInterval = 2000;
+
 function readSensor(idLabel, sensorId) {
 
     xmlhttp = new XMLHttpRequest();
@@ -14,40 +16,52 @@ function readSensor(idLabel, sensorId) {
 
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById(idLabel).insertAdjacentHTML('afterbegin',xmlhttp.responseText + "\n");
+                    var timestamp = new Date();
+                    document.getElementById(idLabel)
+                        .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
+                        " : " + timestamp +
+                        "\n");
                 }
             };
 
             xmlhttp.open("GET", "http://localhost:8081/" + sensorId, true);
             xmlhttp.send();
 
-        }, 2000);
+        }, timeInterval);
     } else if(sensorId == 'sim1') {
         sim1 = setInterval(function() {
 
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById(idLabel).insertAdjacentHTML('afterbegin',xmlhttp.responseText + "\n");
+                    var timestamp = new Date();
+                    document.getElementById(idLabel)
+                        .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
+                        " : " + timestamp +
+                        "\n");
                 }
             };
 
             xmlhttp.open("GET", "http://localhost:8081/" + sensorId, true);
             xmlhttp.send();
 
-        }, 2000);
+        }, timeInterval);
     } else if(sensorId == 'sim2') {
         sim2 = setInterval(function() {
 
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById(idLabel).insertAdjacentHTML('afterbegin',xmlhttp.responseText + "\n");
+                    var timestamp = new Date();
+                    document.getElementById(idLabel)
+                        .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
+                        " : " + timestamp +
+                        "\n");
                 }
             };
 
             xmlhttp.open("GET", "http://localhost:8081/" + sensorId, true);
             xmlhttp.send();
 
-        }, 2000);
+        }, timeInterval);
     } else {
         console.log('Error: [START] Declared sensor is not of defined type');
     }
