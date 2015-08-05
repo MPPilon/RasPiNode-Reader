@@ -2,7 +2,7 @@
 <head>
     <title>OPC UA Client</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="democlient.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,27 +12,72 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center">OPC UA Client</h1>
-                <h2 class="text-center">Reading Ultrasonic sensor</h2>
+                <h2 class="text-center">Reading Remote Sensor Data Demo</h2>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-md-4">
-                <h4 class="text-center">Ultrasonic</h4>
-                <span class="text-center">
-                    <button class="btn btn-success"
-                            onclick="readSensor('ultrasonic')">
-                        Read Sensor
+                <h4 class="text-center">
+                    <button class="btn btn-success btn-xs"
+                            id="startultrasonic"
+                            onclick="readSensor('ultrasonic', 'sonic')">
+                        Start
                     </button>
-                </span>
+                    <button class="btn btn-danger btn-xs disabled"
+                            id="stopultrasonic"
+                            onclick="stopSensor('ultrasonic', 'sonic')">
+                        Stop
+                    </button>
+                    <button class="btn btn-info btn-xs disabled"
+                            id="clearultrasonic"
+                            onclick="clearTextArea('ultrasonic')">
+                        Clear
+                    </button>
+                    Ultrasonic
+                </h4>
                 <textarea id="ultrasonic" class="sensordata"></textarea>
             </div>
             <div class="col-md-4">
-                <h4 class="text-center">Simulated Sensor 1</h4>
+                <h4 class="text-center">
+                    <button class="btn btn-success btn-xs"
+                            id="startsensor1"
+                            onclick="readSensor('sensor1', 'sim1')">
+                        Start
+                    </button>
+                    <button class="btn btn-danger btn-xs disabled"
+                            id="stopsensor1"
+                            onclick="stopSensor('sensor1', 'sim1')">
+                        Stop
+                    </button>
+                    <button class="btn btn-info btn-xs disabled"
+                            id="clearsensor1"
+                            onclick="clearTextArea('sensor1')">
+                        Clear
+                    </button>
+                    Simulated Sensor 1
+                </h4>
                 <textarea id="sensor1" class="sensordata"></textarea>
             </div>
             <div class="col-md-4">
-                <h4 class="text-center">Simulated Sensor 2</h4>
+                <h4 class="text-center">
+                    <button class="btn btn-success btn-xs"
+                            id="startsensor2"
+                            onclick="readSensor('sensor2', 'sim2')">
+                        Start
+                    </button>
+                    <button class="btn btn-danger btn-xs disabled"
+                            id="stopsensor2"
+                            onclick="stopSensor('sensor2', 'sim2')">
+                        Stop
+                    </button>
+                    <button class="btn btn-info btn-xs disabled"
+                            id="clearsensor2"
+                            onclick="clearTextArea('sensor2')">
+                        Clear
+                    </button>
+                    Simulated Sensor 2
+                </h4>
                 <textarea id="sensor2" class="sensordata"></textarea>
             </div>
         </div>

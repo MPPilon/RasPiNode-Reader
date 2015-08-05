@@ -19,7 +19,7 @@ var readSensor = function(readValue, mainCallback) {
                 if (err) {
                     console.log(" cannot connect to endpoint :", endpointUrl);
                 } else {
-                    console.log("connected !");
+                    //console.log("connected !");
                 }
                 callback(err);
             });
@@ -29,7 +29,7 @@ var readSensor = function(readValue, mainCallback) {
             client.createSession(function (err, session) {
                 if (!err) {
                     the_session = session;
-                    console.log("Session successfully created");
+                    //console.log("Session successfully created");
                 }
                 callback(err);
             });
@@ -55,16 +55,40 @@ var readSensor = function(readValue, mainCallback) {
 var express = require('express');
 var app = express();
 
-app.all('/', function(req, res, next) {
+app.all('/sonic', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 });
 
-app.get('/', function (req, res) {
+app.get('/sonic', function (req, res) {
     readSensor("ns=2;s=Sonic", function(value) {
         res.send(value.toString());
     });
+});
+
+app.all('/sim1', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
+app.get('/sim1', function(req, res) {
+    readSensor("ns=2;s=PumpSpeed", function(value) {
+        res.send(value.toString());
+    })
+});
+
+app.all('/sim2', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
+app.get('/sim2', function(req, res) {
+    readSensor("ns=2;s=Pressure", function(value) {
+        res.send(value.toString());
+    })
 });
 
 var server = app.listen(8081, function() {
