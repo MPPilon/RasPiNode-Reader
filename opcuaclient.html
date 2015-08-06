@@ -19,6 +19,9 @@
         <div class="row">
             <div class="col-md-4">
                 <h4 class="text-center">
+                    Ultrasonic
+                </h4>
+                <div class="text-center">
                     <button class="btn btn-success btn-xs"
                             id="startultrasonic"
                             onclick="readSensor('ultrasonic', 'sonic')">
@@ -34,12 +37,14 @@
                             onclick="clearTextArea('ultrasonic')">
                         Clear
                     </button>
-                    Ultrasonic
-                </h4>
-                <textarea id="ultrasonic" class="sensordata"></textarea>
+                </div>
+                <textarea readonly id="ultrasonic" class="sensordata"></textarea>
             </div>
             <div class="col-md-4">
                 <h4 class="text-center">
+                    Simulated Sensor 1
+                </h4>
+                <div class="text-center">
                     <button class="btn btn-success btn-xs"
                             id="startsensor1"
                             onclick="readSensor('sensor1', 'sim1')">
@@ -55,12 +60,14 @@
                             onclick="clearTextArea('sensor1')">
                         Clear
                     </button>
-                    Simulated Sensor 1
-                </h4>
-                <textarea id="sensor1" class="sensordata"></textarea>
+                </div>
+                <textarea readonly id="sensor1" class="sensordata"></textarea>
             </div>
             <div class="col-md-4">
                 <h4 class="text-center">
+                    Simulated Sensor 2
+                </h4>
+                <div class="text-center">
                     <button class="btn btn-success btn-xs"
                             id="startsensor2"
                             onclick="readSensor('sensor2', 'sim2')">
@@ -76,9 +83,8 @@
                             onclick="clearTextArea('sensor2')">
                         Clear
                     </button>
-                    Simulated Sensor 2
-                </h4>
-                <textarea id="sensor2" class="sensordata"></textarea>
+                </div>
+                <textarea readonly id="sensor2" class="sensordata"></textarea>
             </div>
         </div>
     </div>
