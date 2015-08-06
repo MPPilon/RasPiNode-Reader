@@ -2,14 +2,24 @@ var sonic, sim1, sim2;
 
 var timeInterval = 2000;
 
+function changeButton(idLabel, state) {
+    if(state) {
+        document.getElementById('stop' + idLabel).classList.remove('disabled');
+        document.getElementById('start' + idLabel).classList.add('disabled');
+        document.getElementById('clear' + idLabel).classList.add('disabled');
+    } else {
+        document.getElementById('stop' + idLabel).classList.add('disabled');
+        document.getElementById('start' + idLabel).classList.remove('disabled');
+        document.getElementById('clear' + idLabel).classList.remove('disabled');
+    }
+}
+
 function readSensor(idLabel, sensorId) {
 
     xmlhttp = new XMLHttpRequest();
 
     document.getElementById(idLabel).insertAdjacentHTML('afterbegin','--START--\n');
-    document.getElementById('stop' + idLabel).classList.remove('disabled');
-    document.getElementById('start' + idLabel).classList.add('disabled');
-    document.getElementById('clear' + idLabel).classList.add('disabled');
+    changeButton(idLabel, true);
 
     if(sensorId == 'sonic') {
         sonic = setInterval(function() {
@@ -70,9 +80,7 @@ function readSensor(idLabel, sensorId) {
 function stopSensor(idLabel, sensorId) {
 
     document.getElementById(idLabel).insertAdjacentHTML('afterbegin','--STOP---\n');
-    document.getElementById('stop' + idLabel).classList.add('disabled');
-    document.getElementById('start' + idLabel).classList.remove('disabled');
-    document.getElementById('clear' + idLabel).classList.remove('disabled');
+    changeButton(idLabel, false);
 
     if(sensorId == 'sonic') {
         clearInterval(sonic);
