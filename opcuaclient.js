@@ -18,7 +18,7 @@ function readSensor(idLabel, sensorId) {
 
     xmlhttp = new XMLHttpRequest();
 
-    document.getElementById(idLabel).insertAdjacentHTML('afterbegin','--START--\n');
+    document.getElementById(idLabel).insertAdjacentHTML('afterbegin','--START--<br>');
     changeButton(idLabel, true);
 
     if(sensorId == 'sonic') {
@@ -30,7 +30,7 @@ function readSensor(idLabel, sensorId) {
                     document.getElementById(idLabel)
                         .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
                         " : " + timestamp +
-                        "\n");
+                        "<br>");
                 }
             };
 
@@ -47,7 +47,7 @@ function readSensor(idLabel, sensorId) {
                     document.getElementById(idLabel)
                         .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
                         " : " + timestamp +
-                        "\n");
+                        "<br>");
                 }
             };
 
@@ -64,7 +64,7 @@ function readSensor(idLabel, sensorId) {
                     document.getElementById(idLabel)
                         .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
                         " : " + timestamp +
-                        "\n");
+                        "<br>");
                 }
             };
 
@@ -79,7 +79,7 @@ function readSensor(idLabel, sensorId) {
 
 function stopSensor(idLabel, sensorId) {
 
-    document.getElementById(idLabel).insertAdjacentHTML('afterbegin','--STOP---\n');
+    document.getElementById(idLabel).insertAdjacentHTML('afterbegin','--STOP---<br>');
     changeButton(idLabel, false);
 
     if(sensorId == 'sonic') {
