@@ -55,36 +55,42 @@ var readSensor = function(readValue, mainCallback) {
 var express = require('express');
 var app = express();
 
+// CORS
 app.all('/sonic', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 });
 
+// GET ultrasonic sensor
 app.get('/sonic', function (req, res) {
     readSensor("ns=2;s=Sonic", function(value) {
         res.send(value.toString());
     });
 });
 
+// CORS
 app.all('/sim1', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 });
 
+// GET simulated sensor 1 - pump speed
 app.get('/sim1', function(req, res) {
     readSensor("ns=2;s=PumpSpeed", function(value) {
         res.send(value.toString());
     })
 });
 
+// CORS
 app.all('/sim2', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 });
 
+// GET simulated sensor 2 - Pressure
 app.get('/sim2', function(req, res) {
     readSensor("ns=2;s=Pressure", function(value) {
         res.send(value.toString());
