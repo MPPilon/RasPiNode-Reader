@@ -21,7 +21,7 @@ function insertLine(idLabel, lineText, timestamp) {
         "<br>");
 }
 
-function readSensor(idLabel, sensorId) {
+function startSensor(idLabel, sensorId) {
 
     xmlhttp = new XMLHttpRequest();
 
