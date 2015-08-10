@@ -1,6 +1,6 @@
 var sonic, sim1, sim2;
 
-var timeInterval = 2000;
+var timeInterval = 1000;
 
 function changeButton(idLabel, state) {
     if(state) {
@@ -12,6 +12,13 @@ function changeButton(idLabel, state) {
         document.getElementById('start' + idLabel).classList.remove('disabled');
         document.getElementById('clear' + idLabel).classList.remove('disabled');
     }
+}
+
+function insertLine(idLabel, lineText, timestamp) {
+    document.getElementById(idLabel)
+        .insertAdjacentHTML('afterbegin', timestamp +
+        " : " + lineText +
+        "<br>");
 }
 
 function readSensor(idLabel, sensorId) {
@@ -27,10 +34,7 @@ function readSensor(idLabel, sensorId) {
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var timestamp = new Date();
-                    document.getElementById(idLabel)
-                        .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
-                        " : " + timestamp +
-                        "<br>");
+                    insertLine(idLabel, xmlhttp.responseText, timestamp);
                 }
             };
 
@@ -44,10 +48,7 @@ function readSensor(idLabel, sensorId) {
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var timestamp = new Date();
-                    document.getElementById(idLabel)
-                        .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
-                        " : " + timestamp +
-                        "<br>");
+                    insertLine(idLabel, xmlhttp.responseText, timestamp);
                 }
             };
 
@@ -61,10 +62,7 @@ function readSensor(idLabel, sensorId) {
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var timestamp = new Date();
-                    document.getElementById(idLabel)
-                        .insertAdjacentHTML('afterbegin',xmlhttp.responseText +
-                        " : " + timestamp +
-                        "<br>");
+                    insertLine(idLabel, xmlhttp.responseText, timestamp);
                 }
             };
 
