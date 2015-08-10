@@ -19,14 +19,22 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">OPC UA Client</h1>
-                <h2 class="text-center">Reading Remote Sensor Data Demo</h2>
+            <div class="col-md-12 text-center">
+                <h1>OPC UA Client</h1>
+                <h2>Reading Remote Sensor Data Demo</h2>
+                <p>
+                    <button class="btn btn-success"
+                            onclick="startAll()">Start All</button>
+                    <span>&nbsp;</span>
+                    <button class="btn btn-danger"
+                            onclick="stopAll()">Stop All</button>
+                </p>
+                <p>Loop Interval: <span id="interval"></span> ms Pulse: <span id="pulsecount">0</span> Elasped Time: <span id="elapsed"></span> seconds</p>
             </div>
         </div>
         <br>
         <div class="row">
-            <div class="col-md-4 bordered">
+            <div class="col-md-4">
                 <h4 class="text-center">
                     Ultrasonic
                 </h4>
@@ -51,7 +59,7 @@
             </div>
             <div class="col-md-4">
                 <h4 class="text-center">
-                    Simulated Sensor 1
+                    Simulated Pump Speed
                 </h4>
                 <div class="text-center">
                     <button class="btn btn-success btn-xs"
@@ -74,7 +82,7 @@
             </div>
             <div class="col-md-4">
                 <h4 class="text-center">
-                    Simulated Sensor 2
+                    Simulated Pressure
                 </h4>
                 <div class="text-center">
                     <button class="btn btn-success btn-xs"

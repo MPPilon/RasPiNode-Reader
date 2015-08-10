@@ -2,7 +2,9 @@ var sonic = false,
     sim1 = false,
     sim2 = false;
 
-var timeInterval = 1000;
+var timeInterval = 750,
+    pulsecount = 0,
+    initialTime = new Date().getTime();
 
 function changeButton(idLabel, state) {
     if(state) {
@@ -74,6 +76,11 @@ var mainLoop = function () {
     }
 
     console.log("pulse");
+    document.getElementById('pulsecount').innerText = ++pulsecount;
+
+    var nowTime = new Date().getTime();
+    var elasped = (nowTime - initialTime) / 1000;
+    document.getElementById('elapsed').innerText = elasped;
 };
 
 function startSensor(idLabel, sensorId) {
@@ -113,5 +120,19 @@ function clearTextArea(idLabel) {
     document.getElementById(idLabel).innerHTML = "";
 
 }
+
+function stopAll() {
+    stopSensor('ultrasonic','sonic');
+    stopSensor('sensor1','sim1');
+    stopSensor('sensor2','sim2');
+}
+
+function startAll() {
+    startSensor('ultrasonic','sonic');
+    startSensor('sensor1','sim1');
+    startSensor('sensor2','sim2');
+}
+
+document.getElementById('interval').innerText = timeInterval;
 
 setInterval(mainLoop, timeInterval);
