@@ -36,6 +36,20 @@ async.series([
             }
             callback(err);
         });
+    },
+    // step 3: Keep Alive
+    function (callback) {
+        setInterval( function () {
+            readValue = "ns=2;s=Sonic";
+            the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
+                if (!err) {
+                    console.log("-Tick-Keep-Alive-\t:\t" + dataValues[0].value.value);
+                } else {
+                    console.log("Error -Tick------\t:\n" + err);
+                    callback(err);
+                }
+            });
+        }, 15000);
     }
 ]);
 
