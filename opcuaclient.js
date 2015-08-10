@@ -1,6 +1,6 @@
 var sonic, sim1, sim2;
 
-var timeInterval = 1000;
+var timeInterval = 2000;
 
 function changeButton(idLabel, state) {
     if(state) {

@@ -99,7 +99,7 @@ app.get('/sonic', function (req, res) {
     the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
         if (!err) {
             res.send(dataValues[0].value.value.toString());
-            console.log("Read ns=2;s=Sonic : \n" + dataValues[0].value.value);
+            console.log("Read ns=2;s=Sonic\t:\t" + dataValues[0].value.value);
         } else {
             console.log("Error reading ns=2;s=Sonic:\n" + err);
         }
@@ -119,7 +119,7 @@ app.get('/sim1', function(req, res) {
     the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
         if (!err) {
             res.send(dataValues[0].value.value.toString());
-            console.log("Read ns=2;s=PumpSpeed : \n" + dataValues[0].value.value);
+            console.log("Read ns=2;s=PumpSpeed\t:\t" + dataValues[0].value.value);
         } else {
             console.log("Error reading ns=2;s=PumpSpeed:\n" + err);
         }
@@ -139,7 +139,7 @@ app.get('/sim2', function(req, res) {
     the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
         if (!err) {
             res.send(dataValues[0].value.value.toString());
-            console.log("Read ns=2;s=Pressure : \n" + dataValues[0].value.value);
+            console.log("Read ns=2;s=Pressure\t:\t" + dataValues[0].value.value);
         } else {
             console.log("Error reading ns=2;s=Pressure:\n" + err);
         }
