@@ -19,10 +19,10 @@ async.series([
         client.connect(endpointUrl, function (err) {
             if (err) {
                 console.log(" cannot connect to endpoint :", endpointUrl);
-                console.log(err);
+                console.log("Make sure the OPCUA server is running at " + endpointUrl);
                 callback(err);
             } else {
-                console.log("connected");
+                console.log("Connected to %s".green, endpointUrl);
             }
             callback(err);
         });
@@ -32,7 +32,7 @@ async.series([
         client.createSession(function (err, session) {
             if (!err) {
                 the_session = session;
-                console.log("Session successfully created");
+                console.log("Session successfully created".green);
             }
             callback(err);
         });
@@ -40,12 +40,12 @@ async.series([
     // step 3: Keep Alive
     function (callback) {
         setInterval( function () {
-            readValue = "ns=2;s=Sonic";
+            readValue = "ns=2;s=Pressure";
             the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
                 if (!err) {
-                    console.log("-Tick-Keep-Alive-\t:\t" + dataValues[0].value.value);
+                    console.log("-Tick-Keep-Alive-\t:\t%s".yellow, dataValues[0].value.value);
                 } else {
-                    console.log("Error -Tick------\t:\n" + err);
+                    console.log("Error -Tick------\t:\n%s".red, err);
                     callback(err);
                 }
             });
@@ -163,15 +163,15 @@ app.get('/sim2', function(req, res) {
 var server = app.listen(8081, function() {
     var port = server.address().port;
 
-    console.log("API listening on port %s", port);
+    console.log("API listening on port %s".yellow, port);
 });
 
 function exit() {
     client.disconnect(function (err) {
         if (err) {
-            console.log("Disconnect error : " + err);
+            console.log("Disconnect error : %s".red, err);
         } else {
-            console.log("Disconnected from : " + endpointUrl);
+            console.log("\n\nDisconnected from : %s\n".green, endpointUrl);
         }
         process.exit();
     });

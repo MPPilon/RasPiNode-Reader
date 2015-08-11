@@ -2,7 +2,7 @@ var sonic = false,
     sim1 = false,
     sim2 = false;
 
-var timeInterval = 750,
+var timeInterval = 1000,
     pulsecount = 0,
     initialTime = new Date().getTime();
 
