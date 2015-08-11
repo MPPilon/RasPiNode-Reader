@@ -1,7 +1,7 @@
 <strong>Lambton College/Industrial Web Apps OPC UA Project Usage Instructions</strong>
 
 In this document I will use the following convention:
-Entered data will be <strong>BOLD<strong> such as usernames and passwords.
+Entered data will be <strong>BOLD</strong> such as usernames and passwords.
 Entered commands will be <em>ITALIC</em> such as <em>ls</em>, <em>sudo</em>, etc.
 
 On the Raspberry Pi 2:
