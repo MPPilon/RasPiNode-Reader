@@ -39,9 +39,14 @@ function getTimestamp() {
 }
 
 function displayTimeFromSeconds(seconds) {
-    var m = Math.floor(seconds / 60);
-    var h = Math.floor(m / 60);
-    seconds = seconds - (m * 60) - (h * 60 * 60);
+    var minutes = Math.floor(seconds / 60);
+    seconds = seconds - (minutes * 60);
+    var h = 0;
+    var m = minutes;
+    while (m > 59) {
+        h++;
+        m-=60;
+    }
     var s = seconds.toFixed(3);
 
     h = (h<1)? "0": h;
