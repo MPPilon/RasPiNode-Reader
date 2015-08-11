@@ -135,4 +135,5 @@ function startAll() {
 
 document.getElementById('interval').innerText = timeInterval;
 
+// Main data retrieval loop
 setInterval(mainLoop, timeInterval);
