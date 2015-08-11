@@ -38,6 +38,19 @@ function getTimestamp() {
     return hours.toString() + ":" + minutes.toString() + ":" + seconds.toString();
 }
 
+function displayTimeFromSeconds(seconds) {
+    var m = Math.floor(seconds / 60);
+    var h = Math.floor(m / 60);
+    seconds = seconds - (m * 60) - (h * 60 * 60);
+    var s = seconds.toFixed(3);
+
+    h = (h<1)? "0": h;
+    m = (m<1)? "00": ((m<10)? "0" + m: m);
+    var s = (s<10)? "0" + s: s;
+
+    return h + ":" + m + ":" + s;
+}
+
 var mainLoop = function () {
 
     xmlhttp = new XMLHttpRequest();
@@ -75,12 +88,12 @@ var mainLoop = function () {
         xmlhttp.send();
     }
 
-    console.log("pulse");
+    //console.log("pulse");
     document.getElementById('pulsecount').innerText = ++pulsecount;
 
     var nowTime = new Date().getTime();
     var elasped = (nowTime - initialTime) / 1000;
-    document.getElementById('elapsed').innerText = elasped;
+    document.getElementById('elapsed').innerText = displayTimeFromSeconds(elasped);
 };
 
 function startSensor(idLabel, sensorId) {
