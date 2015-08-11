@@ -14,7 +14,7 @@ Usage:<br>
 login using username: <strong>pi</strong> and password: <strong>raspberry</strong><br>
 <br>
 Move to the directory containing the server example:<br>
-<em>cd gpio_ultrasonic/node_modules/node_opcua/bin</em>
+<em>cd gpio_ultrasonic/node_modules/node_opcua/bin</em><br>
 <br>
 Run the server: (sudo is required to access the gpio pins)<br>
 <em>sudo node simple_server.js</em><br>
