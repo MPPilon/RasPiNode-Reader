@@ -37,10 +37,10 @@ async.series([
             callback(err);
         });
     },
-    // step 3: Keep Alive
+    // step 3: Keep Alive - Server expects communication within 20 seconds to stay alive
     function (callback) {
         setInterval( function () {
-            readValue = "ns=2;s=Pressure";
+            readValue = "ns=2;s=SomeDate";
             the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
                 if (!err) {
                     console.log("-Tick-Keep-Alive-\t:\t%s".yellow, dataValues[0].value.value);
@@ -52,48 +52,6 @@ async.series([
         }, 15000);
     }
 ]);
-
-// Depreciated function
-
-//var readSensor = function(readValue, mainCallback) {
-//    async.series([
-//        // step 1 : connect to OPCUA server
-//        function (callback) {
-//            client.connect(endpointUrl, function (err) {
-//                if (err) {
-//                    console.log(" cannot connect to endpoint :", endpointUrl);
-//                    console.log(err);
-//                } else {
-//                    //console.log("connected !");
-//                }
-//                callback(err);
-//            });
-//        },
-//        // step 2 : createSession
-//        function (callback) {
-//            client.createSession(function (err, session) {
-//                if (!err) {
-//                    the_session = session;
-//                    //console.log("Session successfully created");
-//                }
-//                callback(err);
-//            });
-//        },
-//        // step 3 : read variable
-//        function (callback) {
-//            the_session.readVariableValue(readValue, function (err, dataValues, diagnostics) {
-//                if (!err) {
-//                    mainCallback(dataValues[0].value.value);
-//                }
-//                callback(err);
-//            })
-//        },
-//        // step 4 : close session
-//        function () {
-//            client.disconnect(function() {});
-//        }
-//    ]);
-//};
 
 // REST API
 
