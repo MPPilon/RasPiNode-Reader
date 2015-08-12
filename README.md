@@ -3,7 +3,9 @@
 In this document I will use the following convention:<br>
 Entered data will be <strong>BOLD</strong> such as usernames and passwords.<br>
 Entered commands will be <em>ITALIC</em> such as <em>ls</em>, <em>sudo</em>, etc.<br>
-
+<br>
+<em>This demo is to be used with my Pi2 in the lab. You will have to modify simple_server.js to conform to your environment.</em><br>
+<br>
 On the Raspberry Pi 2:<br>
 The Pi2 is currently configured to be able to read the ultrasonic sensor installed on the breadboard. The OPC UA server is configured to read this sensor and simulate two others. These sensors are labeled as:<br>
 ns=2;s=sonic - Ultrasonic sensor distance in cm<br>
