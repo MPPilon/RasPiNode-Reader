@@ -14,9 +14,11 @@
                 <h2>Reading Remote Sensor Data Demo</h2>
                 <p>
                     <button class="btn btn-success"
+                            id="startAll"
                             onclick="startAll()">Start All</button>
                     <span>&nbsp;</span>
-                    <button class="btn btn-danger"
+                    <button class="btn btn-danger disabled"
+                            id="stopAll"
                             onclick="stopAll()">Stop All</button>
                 </p>
                 <p>Loop Interval: <span id="interval"></span> ms Pulse: <span id="pulsecount">0</span> Elasped Time: <span id="elapsed"></span> seconds</p>

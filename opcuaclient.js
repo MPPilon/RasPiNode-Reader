@@ -140,12 +140,16 @@ function clearTextArea(idLabel) {
 }
 
 function stopAll() {
+    document.getElementById('startAll').classList.remove('disabled');
+    document.getElementById('stopAll').classList.add('disabled');
     stopSensor('ultrasonic','sonic');
     stopSensor('sensor1','sim1');
     stopSensor('sensor2','sim2');
 }
 
 function startAll() {
+    document.getElementById('startAll').classList.add('disabled');
+    document.getElementById('stopAll').classList.remove('disabled');
     startSensor('ultrasonic','sonic');
     startSensor('sensor1','sim1');
     startSensor('sensor2','sim2');
