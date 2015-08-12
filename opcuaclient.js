@@ -94,11 +94,14 @@ var mainLoop = function () {
     }
 
     //console.log("pulse");
+
     document.getElementById('pulsecount').innerText = ++pulsecount;
 
     var nowTime = new Date().getTime();
     var elasped = (nowTime - initialTime) / 1000;
     document.getElementById('elapsed').innerText = displayTimeFromSeconds(elasped);
+    var jitter = elasped - ((pulsecount * timeInterval)) / 1000;
+    document.getElementById('jitter').innerText = displayTimeFromSeconds(jitter);
 };
 
 function startSensor(idLabel, sensorId) {
@@ -142,17 +145,29 @@ function clearTextArea(idLabel) {
 function stopAll() {
     document.getElementById('startAll').classList.remove('disabled');
     document.getElementById('stopAll').classList.add('disabled');
-    stopSensor('ultrasonic','sonic');
-    stopSensor('sensor1','sim1');
-    stopSensor('sensor2','sim2');
+    if (sonic) {
+        stopSensor('ultrasonic','sonic');
+    }
+    if (sim1) {
+        stopSensor('sensor1','sim1');
+    }
+    if (sim2) {
+        stopSensor('sensor2','sim2');
+    }
 }
 
 function startAll() {
     document.getElementById('startAll').classList.add('disabled');
     document.getElementById('stopAll').classList.remove('disabled');
-    startSensor('ultrasonic','sonic');
-    startSensor('sensor1','sim1');
-    startSensor('sensor2','sim2');
+    if (!sonic) {
+        startSensor('ultrasonic','sonic');
+    }
+    if (!sim1) {
+        startSensor('sensor1','sim1');
+    }
+    if (!sim2) {
+        startSensor('sensor2','sim2');
+    }
 }
 
 document.getElementById('interval').innerText = timeInterval;
