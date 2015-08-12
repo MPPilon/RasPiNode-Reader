@@ -49,7 +49,7 @@ async.series([
                     callback(err);
                 }
             });
-        }, 15000);
+        }, 10000);
     }
 ]);
 
@@ -131,8 +131,8 @@ function exit() {
         } else {
             console.log("\n\nDisconnected from : %s\n".green, endpointUrl);
         }
-        process.exit();
     });
+    process.exit();
 }
 
 process.on('SIGINT', exit);
