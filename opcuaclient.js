@@ -3,7 +3,7 @@ var sonic = false,
     sim2 = false;
 
 var timeInterval = 1000,
-    pulsecount = 0,
+    pulseCount = 0,
     initialTime = new Date().getTime();
 
 function changeButton(idLabel, state) {
@@ -95,12 +95,12 @@ var mainLoop = function () {
 
     //console.log("pulse");
 
-    document.getElementById('pulsecount').innerText = ++pulsecount;
+    document.getElementById('pulseCount').innerText = ++pulsecount;
 
     var nowTime = new Date().getTime();
     var elasped = (nowTime - initialTime) / 1000;
     document.getElementById('elapsed').innerText = displayTimeFromSeconds(elasped);
-    var jitter = elasped - ((pulsecount * timeInterval)) / 1000;
+    var jitter = elasped - ((pulseCount * timeInterval)) / 1000;
     document.getElementById('jitter').innerText = displayTimeFromSeconds(jitter);
 };
 
