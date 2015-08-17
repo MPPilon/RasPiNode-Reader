@@ -95,7 +95,7 @@ var mainLoop = function () {
 
     //console.log("pulse");
 
-    document.getElementById('pulseCount').innerText = ++pulsecount;
+    document.getElementById('pulseCount').innerText = ++pulseCount;
 
     var nowTime = new Date().getTime();
     var elasped = (nowTime - initialTime) / 1000;
