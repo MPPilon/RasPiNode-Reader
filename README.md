@@ -1,5 +1,7 @@
 <strong>Lambton College/Industrial Web Apps OPC UA Project Usage Instructions</strong>
-
+<br>
+This project is based on the node OPC UA project at: https://github.com/node-opcua<br>
+<br>
 In this document I will use the following convention:<br>
 Entered data will be <strong>BOLD</strong> such as usernames and passwords.<br>
 Entered commands will be <em>ITALIC</em> such as <em>ls</em>, <em>sudo</em>, etc.<br>

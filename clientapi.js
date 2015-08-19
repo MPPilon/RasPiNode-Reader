@@ -46,6 +46,7 @@ async.series([
                     console.log("-Tick-Keep-Alive-\t:\t%s".yellow, dataValues[0].value.value);
                 } else {
                     console.log("Error -Tick------\t:\n%s".red, err);
+                    console.log(diagnostics);
                     callback(err);
                 }
             });
