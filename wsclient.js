@@ -12,6 +12,7 @@ var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
 
 var the_session = null;
 
+// Function to return an OPC UA variable value
 var getSensorValue = function(id, readValue, cb) {
     the_session.readVariableValue(readValue, function(err, dataValues, diagnositics) {
         if (err) {
@@ -22,7 +23,9 @@ var getSensorValue = function(id, readValue, cb) {
     })
 };
 
+// Create OPC UA server connection, session, and keep alive
 async.series([
+    // connection
     function (callback) {
         client.connect(endpointUrl, function (err) {
             if (err) {
@@ -34,6 +37,7 @@ async.series([
             callback(err);
         });
     },
+    // session
     function (callback) {
         client.createSession(function (err, session) {
             if (!err) {
@@ -43,6 +47,7 @@ async.series([
             callback(err);
         });
     },
+    // keep alive
     function (callback) {
         setInterval( function () {
             getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
@@ -69,8 +74,16 @@ var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.
 var sockjs_echo = sockjs.createServer(sockjs_opts);
 
 // Sensors to read
-var subscriptions = ['ns=2;s=Sonic','ns=2;s=PumpSpeed','ns=2;s=Pressure'];
-var ids = ['#sonic','#pumpspeed','#pressure'];
+var subscriptions = [
+    'ns=2;s=Sonic',
+    'ns=2;s=PumpSpeed',
+    'ns=2;s=Pressure'
+];
+var ids = [
+    '#sonic',
+    '#pumpspeed',
+    '#pressure'
+];
 
 // when connected do ...
 sockjs_echo.on('connection', function(conn) {
@@ -92,21 +105,28 @@ sockjs_echo.on('connection', function(conn) {
     }, timeInterval);
 });
 
+// File server location
 var static_directory = new node_static.Server();
 
+// HTTP Server
 var server = http.createServer();
+// request listener
 server.addListener('request', function(req, res) {
     static_directory.serve( req, res);
 });
+// close listener
 server.addListener('upgrade', function(req, res) {
     res.end();
 });
 
+// socket prefix (0.0.0.0:9999/echo)
 sockjs_echo.installHandlers(server, {prefix:'/echo'});
 
 console.log('Listening on 0.0.0.0:9999');
+// Start the server
 server.listen(9999, '0.0.0.0');
 
+// On exit do...
 process.on('SIGINT', function () {
     client.disconnect(function (err) {
         if (!err) {
