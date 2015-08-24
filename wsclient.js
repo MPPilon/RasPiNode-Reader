@@ -22,20 +22,6 @@ var getSensorValue = function(id, readValue, cb) {
     })
 };
 
-//var getSensorValue = function(readValue) {
-//    var returnValue = -1;
-//
-//    the_session.readVariableValue(readValue, function(err, dataValues, diagnostics) {
-//        if (!err) {
-//            console.log(dataValues[0]);
-//            returnValue = dataValues[0].value.value;
-//        } else {
-//            console.log('Error reading ' + readValue + '\n' + err);
-//        }
-//    });
-//    return returnValue;
-//};
-
 async.series([
     function (callback) {
         client.connect(endpointUrl, function (err) {
@@ -59,7 +45,9 @@ async.series([
     },
     function (callback) {
         setInterval( function () {
-            console.log('Keep Alive : %s'.yellow, getSensorValue('ns=2;s=SomeDate'));
+            getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
+                console.log('Keep Alive : %s'.yellow, reading);
+            });
         }, 10000);
         callback();
     }
@@ -70,7 +58,10 @@ var http = require('http'),
     sockjs = require('sockjs'),
     node_static = require('node-static');
 
-var timeInterval = 100;
+// Time Interval: (ms)
+// 20 = 9000 readings / minute
+// 60 = 3000 readings / minute
+var timeInterval = 60;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 
@@ -86,7 +77,7 @@ sockjs_echo.on('connection', function(conn) {
     setInterval( function() {
         var reading;
         for (var i = 0; i < subscriptions.length; i++) {
-            reading = getSensorValue(ids[i], subscriptions[i], function(reading, id, sensor) {
+            getSensorValue(ids[i], subscriptions[i], function(reading, id, sensor) {
                 var line;
                 line = '{"id":"'
                     + id
