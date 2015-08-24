@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SockJs</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="wsstyle.css">
+</head>
+<body>
+<div class="content-fluid">
+    <div class="row sensors">
+        <div class="col-sm-4">
+            <h3>Sonic Sensor</h3>
+            <textarea id="sonic"></textarea>
+        </div>
+        <div class="col-sm-4">
+            <h3>Pump Speed</h3>
+            <textarea id="pumpspeed"></textarea>
+        </div>
+        <div class="col-sm-4">
+            <h3>Pressure</h3>
+            <textarea id="pressure"></textarea>
+        </div>
+    </div>
+    <div class="row console">
+        <div class="col-md-12">
+            <h4>Console:</h4>
+            <textarea id="content"></textarea>
+        </div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+<script src="wsindex.js"></script>
+</body>
+</html>
