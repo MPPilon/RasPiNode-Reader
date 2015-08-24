@@ -2,7 +2,7 @@ var sonic = false,
     sim1 = false,
     sim2 = false;
 
-var timeInterval = 1000,
+var timeInterval = 50,
     pulseCount = 0,
     initialTime = new Date().getTime();
 
@@ -58,7 +58,7 @@ function displayTimeFromSeconds(seconds) {
 
 var mainLoop = function () {
 
-    xmlhttp = new XMLHttpRequest();
+    var xmlhttp = new XMLHttpRequest();
 
     if (sonic) {
         xmlhttp.onreadystatechange = function () {
@@ -102,6 +102,9 @@ var mainLoop = function () {
     document.getElementById('elapsed').innerText = displayTimeFromSeconds(elasped);
     var jitter = elasped - ((pulseCount * timeInterval)) / 1000;
     document.getElementById('jitter').innerText = displayTimeFromSeconds(jitter);
+    var readsPerSecond = 3 * 1000 / timeInterval;
+    document.getElementById('readsPerSecond').innerText = readsPerSecond;
+
 };
 
 function startSensor(idLabel, sensorId) {
