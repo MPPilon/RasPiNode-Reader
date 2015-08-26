@@ -66,7 +66,7 @@ var http = require('http'),
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 60;
+var timeInterval = 500;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 
@@ -98,7 +98,7 @@ sockjs_echo.on('connection', function(conn) {
                     + sensor
                     + '","reading":'
                     + reading + '}';
-                console.log(line);
+                //console.log(line);
                 conn.write(line);
             });
         }
