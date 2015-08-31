@@ -51,7 +51,7 @@ async.series([
     function (callback) {
         setInterval( function () {
             getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
-                console.log('Keep Alive : %s'.yellow, reading);
+                process.stdout.write('Keep Alive : %s'.yellow, reading);
             });
         }, 10000);
         callback();
@@ -66,7 +66,7 @@ var http = require('http'),
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 500;
+var timeInterval = 1000;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 
