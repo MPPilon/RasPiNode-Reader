@@ -51,7 +51,7 @@ async.series([
     function (callback) {
         setInterval( function () {
             getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
-                process.stdout.write('Keep Alive : %s'.yellow, reading);
+                process.stdout.write('Keep Alive : ' + reading + '\r');
             });
         }, 10000);
         callback();
@@ -66,7 +66,8 @@ var http = require('http'),
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 1000;
+var timeInterval = 1000,
+    sensorLoop;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 
@@ -128,6 +129,7 @@ server.listen(9999, '0.0.0.0');
 
 // On exit do...
 process.on('SIGINT', function () {
+    process.stdout.write("\n\n");
     client.disconnect(function (err) {
         if (!err) {
             console.log("\n\nDisconnected from %s".green, endpointUrl);
