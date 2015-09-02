@@ -28,9 +28,7 @@ The OPC UA server will start and after a short time it will be available to clie
 On any platform capable of running a browser and javascript:<br>
 Using the files from my repo at https://github.com/jcodling/node-opcua.git you can run the demo client.<br>
 <br>
-Currently there is an API that allows reading of data from the OPC UA server using a simple RESTful API. This simplifies the display of readings in a webpage using simple HTTP calls for values.<br>
-<br>
-To run the demo you will require your choice of simple http server and the files included in the repo linked above.<br>
+Currently there is a client that allows reading of data from the OPC UA server and provides a websocket for a simple html/js client.<br>
 <br>
 Clone the repo:<br>
 <em>git clone https://github.com/jcodling/node-opcua.git</em><br>
@@ -39,6 +37,6 @@ Install the packages:<br>
 <em>npm install</em><br>
 <br>
 Run the API:<br>
-<em>node clientapi.js</em><br>
+<em>node wsclient.js</em><br>
 <br>
-Run your simple http server and navigate to opcuaclient.html to start the demo.
+Navigate to localhost:9999/wsindex.html to start the demo.
