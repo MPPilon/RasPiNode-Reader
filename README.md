@@ -25,7 +25,7 @@ Run the server: (sudo is required to access the gpio pins)<br>
 <br>
 The OPC UA server will start and after a short time it will be available to clients.<br>
 <br>
-On any platform capable of running a browser and javascript:<br>
+On any platform capable of running a browser and nodejs(with npm)/javascript:<br>
 Using the files from my repo at https://github.com/jcodling/node-opcua.git you can run the demo client.<br>
 <br>
 Currently there is a client that allows reading of data from the OPC UA server and provides a websocket for a simple html/js client.<br>
