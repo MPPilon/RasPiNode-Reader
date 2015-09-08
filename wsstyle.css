@@ -19,7 +19,9 @@ h1, h2, h3, h4 {
 .console textarea {
     height: 294px;
 }
-#chart {
-    width: 100%;
+#sonicChart, #pumpChart, #pressureChart {
     height: 300px;
+    width: 90%;
+    padding: auto;
+    margin: auto;
 }
