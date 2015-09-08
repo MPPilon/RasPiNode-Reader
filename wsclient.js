@@ -24,6 +24,16 @@ var getSensorValue = function(id, readValue, cb) {
 };
 
 // Historian Testing
+var startRecording = function(id, cb) {
+    the_session.addEventHistory(id, function(err) {
+        if (err) {
+            console.log('History: Error adding %s'.red, id);
+        } else {
+            cb(true);
+        }
+    })
+};
+
 var getHistoryValue = function(id, readValue, cb) {
     the_session.readHistoryValue(readValue, "2015-07-01T09:00:00.000Z", "2015-07-03T09:01:00.000Z", function(err, dataValues, diagnostics) {
         if (err) {
@@ -80,7 +90,7 @@ var http = require('http'),
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 250;
+var timeInterval = 1000;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 

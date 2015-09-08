@@ -19,3 +19,7 @@ h1, h2, h3, h4 {
 .console textarea {
     height: 294px;
 }
+#chart {
+    width: 100%;
+    height: 300px;
+}
