@@ -13,15 +13,14 @@ h1, h2, h3, h4 {
 .sensors {
     font-size: 10px;
 }
+.sensors canvas {
+    width: 90%;
+    height: 300px;
+    padding-left: 5px;
+}
 .console {
     font-size: 12px;
 }
 .console textarea {
     height: 294px;
-}
-#sonicChart, #pumpChart, #pressureChart {
-    height: 300px;
-    width: 90%;
-    padding: auto;
-    margin: auto;
 }

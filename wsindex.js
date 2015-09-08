@@ -73,7 +73,7 @@ Chart.defaults.global = {
     maintainAspectRatio: true,
 
     // Boolean - Determines whether to draw tooltips on the canvas or not
-    showTooltips: true,
+    showTooltips: false,
 
     // Function - Determines whether to execute the customTooltips function instead of drawing the built in tooltips (See [Advanced - External Tooltips](#advanced-usage-custom-tooltips))
     customTooltips: false,
@@ -137,7 +137,7 @@ Chart.defaults.global = {
 };
 
 // Maximum number of datapoints to store
-var maxDataToStore = 30,
+var maxDataToStore = 10,
     i,
     labelsArray = ['nd'],
     dataArray = [],
@@ -194,45 +194,6 @@ var pressureChart = {
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: dataArray3
-        }
-    ]
-};
-
-var chartData = {
-    labels: labelsArray,
-    datasets: [
-        {
-            id: "#sonic",
-            label: "Sonic",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: dataArray
-        },
-        {
-            id: "#pumpspeed",
-            label: "Pumpspeed",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: dataArray2
-        },
-        {
-            id: "#pressure",
-            label: "Pressure",
-            fillColor: "rgba(187,151,205,0.2)",
-            strokeColor: "rgba(187,151,205,1)",
-            pointColor: "rgba(187,151,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(187,151,205,1)",
             data: dataArray3
         }
     ]
@@ -348,7 +309,7 @@ var new_connection = function() {
         }, 2000);
     };
 
-    // show results when new information
+    // Process results when new information received
     sock.onmessage = function(e) {
         var content = JSON.parse(e.data);
 
@@ -362,25 +323,6 @@ var new_connection = function() {
 
         // Track charting data
 
-        //tempValues = [];
-
-        //chartData.datasets.forEach(function(v) {
-        //    if (v.id == content.id) {
-        //        tempValues = v.data;
-        //        tempValues.push(content.reading);
-        //        chartData.labels.push(getTimestamp());
-        //        if (chartData.labels.length > maxDataToStore) {
-        //            chartData.labels.shift();
-        //        }
-        //        if (tempValues.length > maxDataToStore) {
-        //            tempValues.shift();
-        //        }
-        //        v.data = tempValues;
-        //    }
-        //});
-
-        //chrt = new Chart(ctx2).Line(chartData, chartOptions);
-
         if (content.id == '#sonic') {
             //sonicChrt = new Chart(ctx2Sonic).Line(sonicChart, chartOptions);
             sonicChrt.addData([content.reading], getTimestamp());
@@ -393,9 +335,9 @@ var new_connection = function() {
             //pressureChrt = new Chart(ctx2Sonic).Line(sonicChart, chartOptions);
             pressureChrt.addData([content.reading], getTimestamp());
             pressureChrt.removeData();
+        } else {
+            console.log('Error: Unexpected value read and returned');
         }
-
-        //chrt.update();
 
         $('#content').val(function(i, text) {
             return getTimestamp()
