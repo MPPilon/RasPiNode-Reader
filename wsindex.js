@@ -2,6 +2,7 @@
  * Created by jeff on 15-08-24.
  */
 
+// getTimestamp - Returns the current time in hours, minutes, seconds and milliseconds to 3 decimal places
 function getTimestamp() {
     var d = new Date();
     var h = d.getHours();
@@ -17,39 +18,58 @@ function getTimestamp() {
     return hours.toString() + ':' + minutes.toString() + ':' + seconds.toString() + ':' + milliseconds.toString();
 }
 
-var sock = new SockJS('http://localhost:9999/echo');
+// Web Socket
 
-sock.onopen = function() {
-    console.log('open');
-    $('#content').val(function(i, text) {
-        return getTimestamp() + ' : open\n' + text;
-    })
-};
+var sock = null,
+    reconnectInterval = null;
 
-sock.onclose = function() {
-    console.log('close');
-    $('#content').val(function(i, text) {
-        return getTimestamp() + ' : close\n' + text;
-    })
-};
+// Function to create and manage a new connection to the web socket
+var new_connection = function() {
+    sock = new SockJS('http://localhost:9999/echo');
 
-sock.onmessage = function(e) {
-    var content = JSON.parse(e.data);
+    clearInterval(reconnectInterval);
 
-    //console.log(e);
+    // Socket open
+    sock.onopen = function() {
+        console.log('open');
+        $('#content').val(function(i, text) {
+            return getTimestamp() + ' : OPEN\n' + text;
+        });
+    };
 
-    $(content.id).val(function(i, text) {
-        return getTimestamp() +
+    // Socket closed
+    sock.onclose = function() {
+        console.log('close');
+        $('#content').val(function(i, text) {
+            return getTimestamp() + ' : CLOSE\t-\tAttempting to reconnect\n' + text;
+        });
+
+        // try to reconnect every 2 seconds (recursively)
+        reconnectInterval = setInterval(function() {
+            new_connection();
+        }, 2000);
+    };
+
+    // show results when new information
+    sock.onmessage = function(e) {
+        var content = JSON.parse(e.data);
+
+        $(content.id).val(function(i, text) {
+            return getTimestamp() +
                 '\t' +
                 content.reading +
                 '\n' +
                 text;
-    });
+        });
 
-    $('#content').val(function(i, text) {
-        return getTimestamp()
-            + '\t'
-            + JSON.stringify(content)
-            + '\n' + text;
-    });
+        $('#content').val(function(i, text) {
+            return getTimestamp()
+                + '\t'
+                + JSON.stringify(content)
+                + '\n' + text;
+        });
+    };
 };
+
+// Start the first connection attempt
+new_connection();

@@ -23,6 +23,20 @@ var getSensorValue = function(id, readValue, cb) {
     })
 };
 
+// Historian Testing
+var getHistoryValue = function(id, readValue, cb) {
+    the_session.readHistoryValue(readValue, "2015-07-01T09:00:00.000Z", "2015-07-03T09:01:00.000Z", function(err, dataValues, diagnostics) {
+        if (err) {
+            console.log('History: Error reading %s'.red, readValue);
+            if (diagnostics) {
+                console.log(diagnostics);
+            }
+        } else {
+            cb(dataValues[0].value.value, id, readValue);
+        }
+    })
+};
+
 // Create OPC UA server connection, session, and keep alive
 async.series([
     // connection
@@ -66,8 +80,7 @@ var http = require('http'),
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 250,
-    sensorLoop;
+var timeInterval = 250;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 
@@ -104,6 +117,7 @@ sockjs_echo.on('connection', function(conn) {
             });
         }
     }, timeInterval);
+
 });
 
 // File server location
