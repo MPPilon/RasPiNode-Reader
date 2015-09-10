@@ -33,10 +33,10 @@ var timeInterval = 1000;
 
 // Parse CLI arguments if available
 if (process.argv.length > 2) {
-    if (process.argv[2] == '-interval' && process.argv[3]) {
-        timeInterval = process.argv[3];
-        console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + 1000/timeInterval*ids.length*60 + ' reads per minute)\n');
-    } else if (process.argv[2] == '--help' || process.argv[2] == '-h') {
+
+    if (process.argv.indexOf('-interval') != -1) {
+        timeInterval = process.argv[process.argv.indexOf('-interval') + 1];
+    } else if (process.argv.indexOf('--help') != -1 || process.argv.indexOf('-h') != -1) {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
                 'options:\n' +
                 '--help or -h\t-\tshow this help dialogue\n' +
@@ -46,6 +46,7 @@ if (process.argv.length > 2) {
     }} else {
     console.log("No options: Running with defaults".green);
 }
+console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + 1000/timeInterval*ids.length*60 + ' reads per minute)\n');
 //
 
 // Function to return an OPC UA variable value

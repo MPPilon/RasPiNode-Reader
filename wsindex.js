@@ -344,7 +344,9 @@ var new_connection = function() {
         $('#content').val(function(i, text) {
             return getTimestamp()
                 + '\t'
-                + JSON.stringify(content)
+                + content.id
+                + "\t:\t"
+                + content.reading
                 + '\n' + text;
         });
     };
