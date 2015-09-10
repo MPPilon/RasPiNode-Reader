@@ -10,6 +10,18 @@ var client = new opcua.OPCUAClient();
 
 var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
 
+// Sensors to read
+var subscriptions = [
+    'ns=2;s=Sonic',
+    'ns=2;s=PumpSpeed',
+    'ns=2;s=Pressure'
+];
+var ids = [
+    '#sonic',
+    '#pumpspeed',
+    '#pressure'
+];
+
 var the_session = null,
     numberReads = 0;
 
@@ -23,12 +35,12 @@ var timeInterval = 1000;
 if (process.argv.length > 2) {
     if (process.argv[2] == '-interval' && process.argv[3]) {
         timeInterval = process.argv[3];
-        console.log('\nRead Interval set to ' + timeInterval + ' (' + timeInterval*3*60*60/1000 + ' per minute)\n');
+        console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + timeInterval*ids.length*60*60/1000 + ' reads per minute)\n');
     } else if (process.argv[2] == '--help' || process.argv[2] == '-h') {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
-                'option:\n' +
-                '--help or -h\t\tshow this help dialogue\n' +
-                '-interval #\t\tset read interval to # ms\n' +
+                'options:\n' +
+                '--help or -h\t-\tshow this help dialogue\n' +
+                '-interval #\t-\tset read interval to # ms\n' +
                 '\n\n';
         console.log(usage);
     }} else {
@@ -115,18 +127,6 @@ var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.
 
 // Open socket
 var sockjs_echo = sockjs.createServer(sockjs_opts);
-
-// Sensors to read
-var subscriptions = [
-    'ns=2;s=Sonic',
-    'ns=2;s=PumpSpeed',
-    'ns=2;s=Pressure'
-];
-var ids = [
-    '#sonic',
-    '#pumpspeed',
-    '#pressure'
-];
 
 // when connected do ...
 sockjs_echo.on('connection', function(conn) {
