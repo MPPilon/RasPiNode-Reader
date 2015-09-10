@@ -137,7 +137,7 @@ Chart.defaults.global = {
 };
 
 // Maximum number of datapoints to store
-var maxDataToStore = 10,
+var maxDataToStore = 20,
     i,
     labelsArray = ['nd'],
     dataArray = [],

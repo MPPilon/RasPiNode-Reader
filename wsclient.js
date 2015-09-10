@@ -10,7 +10,31 @@ var client = new opcua.OPCUAClient();
 
 var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
 
-var the_session = null;
+var the_session = null,
+    numberReads = 0;
+
+// Time Interval: (ms)
+// 20 = 9000 readings / minute
+// 60 = 3000 readings / minute
+var timeInterval = 1000;
+//
+
+// Parse CLI arguments if available
+if (process.argv.length > 2) {
+    if (process.argv[2] == '-interval' && process.argv[3]) {
+        timeInterval = process.argv[3];
+        console.log('\nRead Interval set to ' + timeInterval + ' (' + timeInterval*3*60*60/1000 + ' per minute)\n');
+    } else if (process.argv[2] == '--help' || process.argv[2] == '-h') {
+        var usage = '\n\nUsage: node wsclient.js [option value]\n' +
+                'option:\n' +
+                '--help or -h\t\tshow this help dialogue\n' +
+                '-interval #\t\tset read interval to # ms\n' +
+                '\n\n';
+        console.log(usage);
+    }} else {
+    console.log("No options: Running with defaults".green);
+}
+//
 
 // Function to return an OPC UA variable value
 var getSensorValue = function(id, readValue, cb) {
@@ -75,7 +99,7 @@ async.series([
     function (callback) {
         setInterval( function () {
             getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
-                process.stdout.write('\rLast Keep Alive : '.yellow + reading);
+                process.stdout.write('\rLast Keep Alive : '.yellow + reading + '\tReadings: '.green + numberReads);
             });
         }, 10000);
         callback();
@@ -86,11 +110,6 @@ async.series([
 var http = require('http'),
     sockjs = require('sockjs'),
     node_static = require('node-static');
-
-// Time Interval: (ms)
-// 20 = 9000 readings / minute
-// 60 = 3000 readings / minute
-var timeInterval = 1000;
 
 var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};
 
@@ -124,6 +143,7 @@ sockjs_echo.on('connection', function(conn) {
                     + reading + '}';
                 //console.log(line);
                 conn.write(line);
+                numberReads++;
             });
         }
     }, timeInterval);
