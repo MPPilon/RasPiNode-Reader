@@ -339,6 +339,8 @@ var new_connection = function() {
             console.log('Error: Unexpected value read and returned');
         }
 
+        //$('#content').prepend(getTimestamp() + '\t' + JSON.stringify(content) + '\n');
+
         $('#content').val(function(i, text) {
             return getTimestamp()
                 + '\t'

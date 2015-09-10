@@ -35,7 +35,7 @@ var timeInterval = 1000;
 if (process.argv.length > 2) {
     if (process.argv[2] == '-interval' && process.argv[3]) {
         timeInterval = process.argv[3];
-        console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + timeInterval*ids.length*60*60/1000 + ' reads per minute)\n');
+        console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + 1000/timeInterval*ids.length*60 + ' reads per minute)\n');
     } else if (process.argv[2] == '--help' || process.argv[2] == '-h') {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
                 'options:\n' +
