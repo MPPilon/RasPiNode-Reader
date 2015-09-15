@@ -282,7 +282,7 @@ function getTimestamp() {
 var sock = null,
     reconnectInterval = null;
 
-// Function to create and manage a new connection to the web socket
+// Function to create and manage a new connection to the web socket (wsclient.js)
 var new_connection = function() {
     sock = new SockJS('http://localhost:9999/echo');
 
@@ -336,7 +336,7 @@ var new_connection = function() {
             pressureChrt.addData([content.reading], getTimestamp());
             pressureChrt.removeData();
         } else {
-            console.log('Error: Unexpected value read and returned');
+            console.log('Error: Unexpected value (%s) read and returned %s', content.id, content.reading);
         }
 
         //$('#content').prepend(getTimestamp() + '\t' + JSON.stringify(content) + '\n');
