@@ -168,9 +168,10 @@ server.addListener('upgrade', function(req, res) {
 // socket prefix (0.0.0.0:9999/echo)
 sockjs_echo.installHandlers(server, {prefix:'/echo'});
 
-console.log('Listening on 0.0.0.0:9999');
 // Start the server
 server.listen(9999, '0.0.0.0');
+console.log('Web Server Listening on localhost:9999'.green);
+console.log('http://localhost:9999/wsindex.html - link to sample client\n'.green);
 
 // On exit do...
 process.on('SIGINT', function () {
