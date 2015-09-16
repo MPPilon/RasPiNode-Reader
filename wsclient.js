@@ -28,7 +28,8 @@ var the_session = null,
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 1000;
+var timeInterval = 1000,
+    keepalive = 10000;
 //
 
 // Parse CLI arguments if available
@@ -36,17 +37,21 @@ if (process.argv.length > 2) {
 
     if (process.argv.indexOf('-interval') != -1) {
         timeInterval = process.argv[process.argv.indexOf('-interval') + 1];
+    } else if (process.argv.indexOf('-keepalive')) {
+        keepalive = process.argv[process.argv.indexOf('-keepalive') + 1];
     } else if (process.argv.indexOf('--help') != -1 || process.argv.indexOf('-h') != -1) {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
                 'options:\n' +
                 '--help or -h\t-\tshow this help dialogue\n' +
                 '-interval #\t-\tset read interval to # ms\n' +
+                '-keepalive #\t=\tset OPC UA server keepalive query interval (should be less than 15000)' +
                 '\n\n';
         console.log(usage);
     }} else {
     console.log("No options: Running with defaults".green);
 }
-console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + 1000/timeInterval*ids.length*60 + ' reads per minute)\n');
+console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + 1000/timeInterval*ids.length*60 + ' reads per minute)');
+console.log('Keep Alive interval is set to '.green + keepalive + 'ms\n');
 //
 
 // Function to return an OPC UA variable value
