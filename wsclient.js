@@ -119,7 +119,7 @@ async.series([
             getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
                 process.stdout.write('\rLast Keep Alive : '.yellow + reading + '\tReadings: '.green + numberReads);
             });
-        }, 10000);
+        }, keepalive);
         callback();
     }
 ]);
