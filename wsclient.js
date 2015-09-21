@@ -8,7 +8,10 @@ var async = require("async");
 
 var client = new opcua.OPCUAClient();
 
-var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
+var endpointUrlPrefix = "opc.tcp://";
+var opcuaIp = "108.170.131.122";
+var opcuaPort = "26543";
+var endpointUrlPostfix = "/UA/Server";
 
 // Sensors to read
 var subscriptions = [
@@ -37,14 +40,20 @@ if (process.argv.length > 2) {
 
     if (process.argv.indexOf('-interval') != -1) {
         timeInterval = process.argv[process.argv.indexOf('-interval') + 1];
-    } else if (process.argv.indexOf('-keepalive')) {
+    } else if (process.argv.indexOf('-keepalive') != -1) {
         keepalive = process.argv[process.argv.indexOf('-keepalive') + 1];
+    } else if (process.argv.indexOf('-ip') != -1) {
+        opcuaIp = process.argv[process.argv.indexOf('-ip') + 1];
+    } else if (process.argv.indexOf('-port') != -1) {
+        opcuaPort = process.argv[process.argv.indexOf('-port') + 1];
     } else if (process.argv.indexOf('--help') != -1 || process.argv.indexOf('-h') != -1) {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
                 'options:\n' +
                 '--help or -h\t-\tshow this help dialogue\n' +
                 '-interval #\t-\tset read interval to # ms\n' +
-                '-keepalive #\t=\tset OPC UA server keepalive query interval (should be less than 15000)' +
+                '-keepalive #\t-\tset OPC UA server keepalive query interval (should be less than 15000)' +
+                '-ip #.#.#.#\t-\tset OPC UA server IP address' +
+                '-port #\t-\tset OPC UA server PORT number to use' +
                 '\n\n';
         console.log(usage);
     }} else {
@@ -52,7 +61,10 @@ if (process.argv.length > 2) {
 }
 console.log('\nRead Interval set to '.green + timeInterval + 'ms (' + 1000/timeInterval*ids.length*60 + ' reads per minute)');
 console.log('Keep Alive interval is set to '.green + keepalive + 'ms\n');
+
+var endpointUrl = endpointUrlPrefix + opcuaIp + ":" + opcuaPort + endpointUrlPostfix;
 //
+
 
 // Function to return an OPC UA variable value
 var getSensorValue = function(id, readValue, cb) {
