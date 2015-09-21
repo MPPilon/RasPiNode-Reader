@@ -1,5 +1,11 @@
 /**
- * Created by jeff on 15-08-24.
+ * OPC UA client Web Socket provider for OPC UA Reading Remote Sensor Data Demo
+ *
+ * by Jeff Codling
+ * Started on 15-08-24
+ *
+ * Project: Industrial Web Apps / Lambton College Research and Innovation
+ * in association with Lambton Water Research
  */
 
 // OPC UA Client Connection
@@ -51,11 +57,12 @@ if (process.argv.length > 2) {
                 'options:\n' +
                 '--help or -h\t-\tshow this help dialogue\n' +
                 '-interval #\t-\tset read interval to # ms\n' +
-                '-keepalive #\t-\tset OPC UA server keepalive query interval (should be less than 15000)' +
-                '-ip #.#.#.#\t-\tset OPC UA server IP address' +
-                '-port #\t-\tset OPC UA server PORT number to use' +
+                '-keepalive #\t-\tset OPC UA server keepalive query interval (should be less than 15000)\n' +
+                '-ip #.#.#.#\t-\tset OPC UA server IP address\n' +
+                '-port #\t-\tset OPC UA server PORT number to use\n' +
                 '\n\n';
         console.log(usage);
+        process.exit();
     }} else {
     console.log("No options: Running with defaults".green);
 }
