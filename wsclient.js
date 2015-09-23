@@ -15,7 +15,8 @@ var async = require("async");
 var client = new opcua.OPCUAClient();
 
 var endpointUrlPrefix = "opc.tcp://";
-var opcuaIp = "108.170.131.122";
+var opcuaIp = "184.151.36.91";
+//var opcuaIp = "108.170.131.122";
 var opcuaPort = "26543";
 var endpointUrlPostfix = "/UA/Server";
 
@@ -50,8 +51,10 @@ if (process.argv.length > 2) {
         keepalive = process.argv[process.argv.indexOf('-keepalive') + 1];
     } else if (process.argv.indexOf('-ip') != -1) {
         opcuaIp = process.argv[process.argv.indexOf('-ip') + 1];
+        console.log('\nSetting OPC UA server IP to ' + opcuaIp);
     } else if (process.argv.indexOf('-port') != -1) {
         opcuaPort = process.argv[process.argv.indexOf('-port') + 1];
+        console.log('\nSetting OPC UA server Port to ' + opcuaPort);
     } else if (process.argv.indexOf('--help') != -1 || process.argv.indexOf('-h') != -1) {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
                 'options:\n' +
@@ -112,6 +115,7 @@ var getHistoryValue = function(id, readValue, cb) {
 async.series([
     // connection
     function (callback) {
+        console.log('\nConnecting to OPC UA server at: ' + endpointUrl + '\n');
         client.connect(endpointUrl, function (err) {
             if (err) {
                 console.log('Cannot connect to endpoint %s'.red, endpointUrl);
