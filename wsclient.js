@@ -55,6 +55,9 @@ if (process.argv.length > 2) {
     } else if (process.argv.indexOf('-port') != -1) {
         opcuaPort = process.argv[process.argv.indexOf('-port') + 1];
         console.log('\nSetting OPC UA server Port to ' + opcuaPort);
+    } else if (process.argv.indexOf('-url') != -1) {
+        endpointUrlPostfix = process.argv[process.argv.indexOf('-url') + 1];
+        console.log('\nSetting URL of server to ' + endpointUrlPostfix);
     } else if (process.argv.indexOf('--help') != -1 || process.argv.indexOf('-h') != -1) {
         var usage = '\n\nUsage: node wsclient.js [option value]\n' +
                 'options:\n' +
@@ -63,6 +66,7 @@ if (process.argv.length > 2) {
                 '-keepalive #\t-\tset OPC UA server keepalive query interval (should be less than 15000)\n' +
                 '-ip #.#.#.#\t-\tset OPC UA server IP address\n' +
                 '-port #\t-\tset OPC UA server PORT number to use\n' +
+                '-url\t-\tset server endpoint url to use\n' +
                 '\n\n';
         console.log(usage);
         process.exit();
