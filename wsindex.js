@@ -137,7 +137,7 @@ Chart.defaults.global = {
 };
 
 // Maximum number of datapoints to store
-var maxDataToStore = 20,
+var maxDataToStore = 50,
     i,
     labelsArray = ['nd'],
     dataArray = [],
@@ -155,10 +155,10 @@ var sonicChart = {
     labels: labelsArray,
     datasets: [
         {
-            label: "Sonic",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
+            label: "Temperature",
+            fillColor: "rgba(205,100,100,0.2)",
+            strokeColor: "rgba(205,100,100,1)",
+            pointColor: "rgba(205,100,100,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
@@ -171,7 +171,7 @@ var pumpChart = {
     labels: labelsArray,
     datasets: [
         {
-            label: "Pump Speed",
+            label: "Humidity",
             fillColor: "rgba(151,187,205,0.2)",
             strokeColor: "rgba(151,187,205,1)",
             pointColor: "rgba(151,187,205,1)",
@@ -226,7 +226,7 @@ var chartOptions = {
     pointDot : true,
 
     //Number - Radius of each point dot in pixels
-    pointDotRadius : 4,
+    pointDotRadius : 2,
 
     //Number - Pixel width of point dot stroke
     pointDotStrokeWidth : 1,
@@ -311,8 +311,8 @@ var new_connection = function() {
 
     // Process results when new information received
     sock.onmessage = function(e) {
+        console.log("Message: " + e.data);
         var content = JSON.parse(e.data);
-
         $(content.id).val(function(i, text) {
             return getTimestamp() +
                 '\t' +
@@ -323,15 +323,15 @@ var new_connection = function() {
 
         // Track charting data
 
-        if (content.id == '#sonic') {
+        if (content.id == "#temperature") {
             //sonicChrt = new Chart(ctx2Sonic).Line(sonicChart, chartOptions);
             sonicChrt.addData([content.reading], getTimestamp());
             sonicChrt.removeData();
-        } else if (content.id == '#pumpspeed') {
+        } else if (content.id == "#humVar") {
             //pumpChrt = new Chart(ctx2Sonic).Line(sonicChart, chartOptions);
             pumpChrt.addData([content.reading], getTimestamp());
             pumpChrt.removeData();
-        } else if (content.id == '#pressure') {
+        } else if (content.id == "#presVar") {
             //pressureChrt = new Chart(ctx2Sonic).Line(sonicChart, chartOptions);
             pressureChrt.addData([content.reading], getTimestamp());
             pressureChrt.removeData();
@@ -342,12 +342,12 @@ var new_connection = function() {
         //$('#content').prepend(getTimestamp() + '\t' + JSON.stringify(content) + '\n');
 
         $('#content').val(function(i, text) {
-            return getTimestamp()
-                + '\t'
-                + content.id
-                + "\t:\t"
-                + content.reading
-                + '\n' + text;
+            return getTimestamp() +
+                '\t' +
+                content.id +
+                "\t:\t" +
+                content.reading +
+                '\n' + text;
         });
     };
 };

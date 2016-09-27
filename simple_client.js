@@ -24,7 +24,7 @@ var client = new opcua.OPCUAClient();
 // var endpointUrl = "opc.tcp://10.211.55.3:16664";
 
 // Endpoint for Raspberry Pi
-var endpointUrl = "opc.tcp://192.168.1.116:26543/UA/Server";
+var endpointUrl = "opc.tcp://nb-b101b-d-mag.lambton.on.ca:4334/OPCUA/Mabel";
 // var endpointUrl = "opc.tcp://192.168.1.116:26543";
 
 var the_session = null;
@@ -106,17 +106,17 @@ async.series([
             attributeId: 13
           //, dataEncoding: { namespaceIndex: 0, name:null }
         },
-        { 
+        {
             samplingInterval: 100,
             discardOldest: true,
-            queueSize: 10 
+            queueSize: 10
         });
         console.log("Monitor-----------------1-------------------");
 
         // subscription.on("item_added",function(monitoredItem){
         //xx monitoredItem.on("initialized",function(){ });
         //xx monitoredItem.on("terminated",function(value){ });
-        
+
         var monitoredItem2 = the_subscription.monitor({
         		nodeId: opcua.resolveNodeId(readValue2),
         		attributeId: 13
@@ -144,7 +144,7 @@ async.series([
             console.log(value.value.value);
             values.push(value.value.value);
         });
-        
+
         monitoredItem2.on("changed",function(value){
         		console.log("----------" + readValue2.red);
         		console.log(value.value.value);
@@ -174,21 +174,21 @@ async.series([
         if (err) {
             console.log("-failure ".red,err);
         } else {
-            console.log("done!".green)
-            
+            console.log("done!".green);
+
             var average = 0,
             min = 9999999999,
             max = 0,
             i = 0;
-            
+
             console.log("\nStats".white);
             for(i = 0; i < values.length; i++) {
             		average += values[i];
-            };
+            }
             average /= values.length;
             min = Math.min.apply(Math, values);
             max = Math.max.apply(Math, values);
-            
+
             console.log("");
             console.log(readValue.cyan);
             console.log("Len=" + values.length + "\tMax=" + max + "\tMin=" + min + "\tAvg=" + average);
@@ -198,7 +198,7 @@ async.series([
             average = min = max = 0;
             for(i = 0; i < values2.length; i++) {
             		average += values2[i];
-            };
+            }
             average /= values2.length;
             min = Math.min.apply(Math, values2);
             max = Math.max.apply(Math, values2);
@@ -211,7 +211,7 @@ async.series([
             average = min = max = 0;
             for(i = 0; i < values3.length; i++) {
             		average += values3[i];
-            };
+            }
             average /= values3.length;
             min = Math.min.apply(Math, values3);
             max = Math.max.apply(Math, values3);
@@ -223,4 +223,3 @@ async.series([
         client.disconnect(function(){});
     }
 );
-

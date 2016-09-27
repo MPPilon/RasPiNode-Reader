@@ -11,51 +11,36 @@
 // OPC UA Client Connection
 var opcua = require("node-opcua");
 var async = require("async");
-var readline = require("readline");
 
 var client = new opcua.OPCUAClient();
-client.endpoint_must_exist = false;
 
 var endpointUrlPrefix = "opc.tcp://";
+var opcuaIp = "nb-b101b-d-mag.lambton.on.ca";
 //var opcuaIp = "108.170.131.122";
-
-//This info is for the local server
-/*var opcuaIp = "localhost";
 var opcuaPort = "4334";
-var endpointUrlPostfix = "/OPCUA/Mabel";*/
-
-//This info is for the Raspberry Pi
-var opcuaIp = "10.55.39.69";
-var opcuaPort = "4334";
-var endpointUrlPostfix = "/OPCUA/Dipper";
+var endpointUrlPostfix = "/OPCUA/Mabel";
 
 // Sensors to read
 var subscriptions = [
-    'Temperature'
+    'ns=2;s=Sonic',
+    'ns=2;s=PumpSpeed',
+    'ns=2;s=Pressure'
 ];
 var ids = [
-    "ns=1;s=temperature"
+    '#sonic',
+    '#pumpspeed',
+    '#pressure'
 ];
 
 var the_session = null,
-    numberReads = 0,
-    averageThirtySeconds = 0,
-    readingAdder = 0,
-    secondCounter = 0;
+    numberReads = 0;
 
 // Time Interval: (ms)
 // 20 = 9000 readings / minute
 // 60 = 3000 readings / minute
-var timeInterval = 30000,
-    keepalive = 1000;
+var timeInterval = 1000,
+    keepalive = 10000;
 //
-
-//create a console interface
-
-var cmd = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 // Parse CLI arguments if available
 if (process.argv.length > 2) {
@@ -94,13 +79,14 @@ console.log('Keep Alive interval is set to '.green + keepalive + 'ms\n');
 var endpointUrl = endpointUrlPrefix + opcuaIp + ":" + opcuaPort + endpointUrlPostfix;
 //
 
+
 // Function to return an OPC UA variable value
-var getSensorValue = function(id, cb) {
-    the_session.readVariableValue(id, function(err, dataValues, diagnositics) {
+var getSensorValue = function(id, readValue, cb) {
+    the_session.readVariableValue(readValue, function(err, dataValues, diagnositics) {
         if (err) {
-            console.log('Error reading %s'.red + ": " + err + " - " + dataValues.value.value, id);
+            console.log('Error reading %s'.red, readValue);
         } else {
-            cb(dataValues.value.value, id);
+            cb(dataValues[0].value.value, id, readValue);
         }
     });
 };
@@ -131,19 +117,10 @@ var getHistoryValue = function(id, readValue, cb) {
 
 // Create OPC UA server connection, session, and keep alive
 async.series([
-    function (callback) {
-      client.getEndpointsRequest(function (err, endpoints) {
-
-        console.log("Client: " + client);
-
-      });
-      callback();
-    },
     // connection
     function (callback) {
         console.log('\nConnecting to OPC UA server at: ' + endpointUrl + '\n');
         client.connect(endpointUrl, function (err) {
-            console.log("Entered connect callback");
             if (err) {
                 console.log('Cannot connect to endpoint %s'.red, endpointUrl);
                 callback(err);
@@ -152,11 +129,9 @@ async.series([
             }
             callback(err);
         });
-
     },
     // session
     function (callback) {
-        console.log("Session function");
         client.createSession(function (err, session) {
             if (!err) {
                 the_session = session;
@@ -165,88 +140,17 @@ async.series([
             callback(err);
         });
     },
-
-  /*  function(callback) {
-      //This function crawls through the address space and prints it to
-      //OutputFile.txt for further reading.
-        var treeify = require("node-opcua/node_modules/treeify");
-        var fs = require("fs");
-        var writeStream = fs.createWriteStream("OutputFile.txt");
-        var crawler = new opcua.NodeCrawler(the_session);
-
-          var t = Date.now();
-          var t1;
-          client.on("send_request", function () {
-              t1 = Date.now();
-          });
-          client.on("receive_response", function () {
-              var t2 = Date.now();
-              var util = require("util");
-              var str = util.format("R= %d W= %d T=%d t= %d", client.bytesRead, client.bytesWritten, client.transactionsPerformed, (t2 - t1));
-              console.log(str.yellow.bold);
-          });
-
-          t = Date.now();
-          crawler.on("browsed", function (element) {
-              // console.log("->",element.browseName.name,element.nodeId.toString());
-          });
-
-          var nodeId = "RootFolder";
-          console.log("now crawling all folders ...please wait...");
-          crawler.read(nodeId, function (err, obj) {
-              if (!err) {
-                  // todo : treeify.asTree performance is *very* slow on large object, replace with better implementation
-                  //xx console.log(treeify.asTree(obj, true));
-                  treeify.asLines(obj, true, true, function (line) {
-                      writeStream.write(line + "\n");
-                  });
-              }
-          });
-          console.log("Crawl complete.");
-        /*if(!err) {
-          console.log("RootFolder length: " + browse_result[0].references.length);
-          console.log("RootFolder: " + browse_result);
-          var browseDescription = {
-            nodeId: "FolderType",
-            browseDirection: opcua.browse_service.BrowseDirection.Forward
-          };
-          the_session.browse(browseDescription, function(err2, browse_result2) {
-            console.log("Second folder result:" + browse_result2);
-          });
-        }*/
-         //callback();
-      //});
-
-    //},
-
     // keep alive
     function (callback) {
-        console.log("keepalive function");
         setInterval( function () {
-            getSensorValue("ns=1;s=temperature", function(reading, id) {
-                process.stdout.write('\rLast Keep Alive : '.yellow + reading + ' \tReadings: '.green + numberReads);
-                readingAdder += reading;
-                if (secondCounter == 30) {
-                  averageThirtySeconds = readingAdder / 30;
-                  readingAdder = 0;
-                  secondCounter = 0;
-                }
-                secondCounter++;
+            getSensorValue('', 'ns=2;s=SomeDate', function(reading, id, sensor) {
+                process.stdout.write('\rLast Keep Alive : '.yellow + reading + '\tReadings: '.green + numberReads);
             });
         }, keepalive);
-
-        cmd.prompt();
-        cmd.on("line", function(request) {
-          //line happens when we submit something from the console.
-          getSensorValue(request, function(response, requested) {
-            console.log("Requested " + requested + ", received: \n" + response);
-          });
-          cmd.prompt();
-        });
         callback();
     }
-]
-);
+]);
+
 // Web Socket and Web Server
 var http = require('http'),
     sockjs = require('sockjs'),
@@ -259,21 +163,18 @@ var sockjs_echo = sockjs.createServer(sockjs_opts);
 
 // when connected do ...
 sockjs_echo.on('connection', function(conn) {
-
     setInterval( function() {
         var reading;
         for (var i = 0; i < subscriptions.length; i++) {
-          /* jshint loopfunc:true */
-          getSensorValue(ids[i], function(reading, id) {
-              var line;
-              //line = '{ "id": "#' + id.substring(7, id.length + 1) + '", "reading": ' + reading + ' }';
-              line = '{ "id": "#' + id.substring(7, id.length + 1) + '", "reading": ' + averageThirtySeconds + ' }';
-              //console.log("Sent to page: " + line);
-              conn.write(line);
-              numberReads++;
-          });
-
-          //console.log("ID: " + ids[i] + " |Subscriptions: " + subscriptions[i]);
+            getSensorValue(ids[i], subscriptions[i], function(reading, id, sensor) {
+                var line;
+                line = '{"id":"' + id +
+                      '","sensor":"' + sensor +
+                      '","reading":' + reading + '}';
+                //console.log(line);
+                conn.write(line);
+                numberReads++;
+            });
         }
     }, timeInterval);
 

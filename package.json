@@ -1,24 +1,17 @@
 {
-  "name": "node-opcua-sample",
-  "version": "0.0.19",
-  "description": "Simple OPCUA  client using node-opcua",
-  "main": "simple_client.js",
+  "name": "weather_client",
+  "version": "1.0.0",
+  "description": "client for weather station",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/erossignon/node-opcua-sample.git"
-  },
-  "keywords": [
-    "opcua"
-  ],
-  "author": "Etienne Rossignon",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "async": "~0.7.0",
-    "express": "^4.13.3",
-    "http-server": "^0.8.0",
-    "node-opcua": "~0.0.24"
+    "async": "^2.0.0",
+    "node-opcua": "0.0.56",
+    "node-static": "^0.7.7",
+    "sockjs": "^0.3.17"
   }
 }
